@@ -5,7 +5,7 @@ const { MongoClient, ObjectID } = require('mongodb');
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const database = 'task-manager';
 
-const id = new ObjectID();
+// const id = new ObjectID();
 
 MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) => {
   if (error) {
@@ -14,54 +14,32 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
 
   const db = client.db(database);
 
-  // db.collection('users').insertOne({
-  //   name: 'Jane',
-  //   age: 27
-  // }, (error, result) => {
+  // db.collection('users').findOne({ name: 'Jane', age: 1 }, (error, user) => {
   //   if (error) {
-  //     return console.log('Unable to insert user.');
+  //     return console.log('Unable to fetch');
   //   }
   //
-  //   console.log(result.ops);
+  //   console.log(user);
   // })
-
-  // db.collection('users').insertMany([
-  //   {
-  //     name: 'Jen',
-  //     age: 22
-  //   },
-  //   {
-  //     name: 'Brad',
-  //     age: 23
-  //   }
-  // ], (error, result) => {
-  //   if (error) {
-  //     return console.log('Unable to insert documents.');
-  //   }
   //
-  //   console.log(result.ops);
+  // db.collection('users').find({  age: 23 }).toArray((error, users) => {
+  //   console.log(users);
   // })
 
-  // db.collection('tasks').insertMany([
-  //   {
-  //     description: 'Clean the house',
-  //     completed: true
-  //   },
-  //   {
-  //     description: 'Renew inspection',
-  //     completed: false
-  //   },
-  //   {
-  //     description: 'Pot plants',
-  //     completed: false
-  //   }
-  // ], (error, result) => {
-  //   if (error) {
-  //     return console.log('Unable to insert tasks!');
-  //   }
-  //
-  //   console.log(result.ops);
-  // })
+  db.collection('tasks').findOne({ _id: ObjectID("5d6717d9fe7b84bada300b69") }, (error, task) => {
+    if (error) {
+      return console.log('Unable to find task.');
+    }
 
+    console.log(task);
+  })
+
+  db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
+    if (error) {
+      return console.log('Unable to find task(s)');
+    }
+
+    console.log(tasks);
+  })
 
 });
